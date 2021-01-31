@@ -3,11 +3,11 @@ import { MEAT_API } from '../app.api';
 import { ErrorHandler } from '../app.error-handler';
 
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
+
+import { Observable } from 'rxjs';
 
 import { MenuItem } from '../restaurant-detail/menu-item/menu-item.model';
 
@@ -15,10 +15,10 @@ import { MenuItem } from '../restaurant-detail/menu-item/menu-item.model';
 
 export class RestaurantsService {
 
-  constructor(private http: Http) {};
+  constructor(private http: HttpClient) {};
 
-  restaurants(): Observable<Restaurant[]> {
-    return this.http.get(`${MEAT_API}/restaurants`)
+  restaurants(search?: string): Observable<Restaurant[]> {
+    return this.http.get(`${MEAT_API}/restaurants`, {params: {q: search}})
     .map(response => response.json())
     .catch(ErrorHandler.handleError);
   }
