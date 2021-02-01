@@ -3,11 +3,12 @@ import { MEAT_API } from '../app.api';
 import { ErrorHandler } from '../app.error-handler';
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Http } from '@angular/http';
 
-import { map } from 'rxjs/operators';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 import { MenuItem } from '../restaurant-detail/menu-item/menu-item.model';
 
@@ -15,7 +16,7 @@ import { MenuItem } from '../restaurant-detail/menu-item/menu-item.model';
 
 export class RestaurantsService {
 
-  constructor(private http: HttpClient) {};
+  constructor(private http: Http) {};
 
   restaurants(search?: string): Observable<Restaurant[]> {
     return this.http.get(`${MEAT_API}/restaurants`, {params: {q: search}})
